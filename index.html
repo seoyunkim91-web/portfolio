@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="김서윤의 광고 플랫폼 PM 포트폴리오. 자동입찰, 매체 API 연동, 광고 운영 자동화 사례를 소개합니다.">
+  <meta name="theme-color" content="#171b24">
+  <title>김서윤 | 광고 플랫폼 PM 포트폴리오</title>
+  <style>
+    :root { --ink:#171b24; --muted:#5c6470; --line:#dfe2e6; --paper:#f7f7f4; --white:#fff; --accent:#e64755; --accent-dark:#b72a38; --blue:#dce8f8; --green:#dbf1e6; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif; line-height:1.65; word-break:keep-all; }
+    a { color:inherit; }
+    a:focus-visible { outline:3px solid var(--accent); outline-offset:4px; border-radius:3px; }
+    .skip { position:absolute; left:-9999px; top:10px; background:#fff; padding:8px 12px; z-index:20; }
+    .skip:focus { left:12px; }
+    .wrap { width:min(1120px, calc(100% - 48px)); margin:auto; }
+    .site-header { background:var(--ink); color:#fff; border-bottom:1px solid #343944; }
+    .site-header .wrap { display:flex; justify-content:space-between; align-items:center; min-height:74px; gap:24px; }
+    .brand { font-size:15px; letter-spacing:-.02em; text-decoration:none; font-weight:800; }
+    .brand span { color:#ff7984; }
+    nav { display:flex; flex-wrap:wrap; gap:25px; }
+    nav a { color:#d5d9e0; text-decoration:none; font-size:13px; font-weight:650; }
+    nav a:hover { color:#fff; }
+    .hero { background:var(--ink); color:#fff; overflow:hidden; }
+    .hero .wrap { display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:44px; align-items:center; padding:94px 0 100px; }
+    .eyebrow { margin:0 0 18px; color:var(--accent-dark); font-size:12px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; }
+    .hero .eyebrow { color:#ff8b94; }
+    h1,h2,h3,p { margin-top:0; }
+    h1 { font-size:clamp(38px,5.4vw,65px); line-height:1.19; letter-spacing:-.065em; margin-bottom:26px; }
+    .hero .lead { max-width:650px; color:#d0d3db; font-size:17px; line-height:1.85; margin-bottom:30px; }
+    .hero-actions { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+    .button { display:inline-flex; align-items:center; justify-content:center; min-height:45px; padding:10px 18px; border-radius:6px; text-decoration:none; font-size:13px; font-weight:800; transition:transform .2s, background .2s; }
+    .button:hover { transform:translateY(-2px); }
+    .button.primary { background:var(--accent); color:#fff; }
+    .button.primary:hover { background:#cc3948; }
+    .button.ghost { border:1px solid #7d8390; color:#fff; }
+    .hero-card { padding:29px; border:1px solid #555b67; border-radius:14px; background:linear-gradient(140deg,#292e39,#1e222c); box-shadow:20px 24px 0 #11151d; transform:rotate(2deg); }
+    .hero-card .kicker { color:#ff9ca4; font-size:12px; font-weight:800; letter-spacing:.1em; }
+    .hero-card h2 { margin:12px 0 22px; font-size:23px; line-height:1.4; letter-spacing:-.04em; }
+    .hero-card ol { padding:0; margin:0; list-style:none; }
+    .hero-card li { border-top:1px solid #4a505c; padding:12px 0; color:#d5d8df; font-size:13px; }
+    .hero-card li strong { color:#ff8b94; margin-right:12px; }
+    .hero-card .small { color:#aeb4c0; margin:15px 0 0; font-size:11px; }
+    .stats { background:#fff; border-bottom:1px solid var(--line); }
+    .stats .wrap { display:grid; grid-template-columns:repeat(3,1fr); }
+    .stat { padding:28px 0 28px 25px; border-right:1px solid var(--line); }
+    .stat:first-child { padding-left:0; }
+    .stat:last-child { border:0; }
+    .stat b { display:block; font-size:28px; line-height:1.2; letter-spacing:-.04em; }
+    .stat span { color:var(--muted); font-size:12px; }
+    main section { scroll-margin-top:20px; }
+    .section { padding:94px 0; }
+    .section-head { display:flex; justify-content:space-between; gap:35px; align-items:end; margin-bottom:34px; }
+    .section-head h2 { font-size:clamp(30px,4vw,42px); line-height:1.32; letter-spacing:-.055em; margin:0; }
+    .section-head > p { max-width:390px; color:var(--muted); font-size:14px; margin:0 0 4px; }
+    .case { background:#fff; border:1px solid var(--line); border-radius:14px; padding:36px; margin-bottom:18px; display:grid; grid-template-columns:minmax(0,1fr) minmax(360px,.9fr); gap:44px; box-shadow:0 7px 22px rgba(29,34,43,.035); }
+    .case-num { display:inline-block; color:var(--accent-dark); font-size:12px; font-weight:900; letter-spacing:.1em; margin-bottom:16px; }
+    .case h3 { font-size:26px; line-height:1.36; letter-spacing:-.045em; margin-bottom:12px; }
+    .case .summary { color:var(--muted); font-size:14px; margin-bottom:21px; }
+    .tags { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:23px; }
+    .tag { padding:5px 9px; border-radius:4px; background:#f0f1f3; color:#414955; font-size:11px; font-weight:750; }
+    .facts { margin:0; }
+    .facts div { display:grid; grid-template-columns:62px 1fr; gap:14px; padding:10px 0; border-top:1px solid #edf0f2; font-size:13px; }
+    .facts dt { color:#747d89; font-weight:800; }
+    .facts dd { margin:0; color:#303743; }
+    .diagram { align-self:stretch; border-radius:10px; padding:24px; background:#f3f5f7; min-height:260px; display:flex; flex-direction:column; justify-content:center; }
+    .diagram .caption { color:#69717e; font-size:11px; font-weight:800; letter-spacing:.02em; margin-bottom:15px; }
+    .flow { display:flex; align-items:stretch; gap:8px; }
+    .flow .step { flex:1; background:#fff; border:1px solid #dbe0e5; border-radius:7px; padding:14px 10px; font-size:12px; line-height:1.45; }
+    .flow .step b { display:block; font-size:12px; margin-bottom:7px; }
+    .flow .arrow { align-self:center; color:#7e8793; font-weight:800; }
+    .outcome { margin-top:13px; background:#e8edf3; border-radius:6px; padding:10px 13px; font-size:11px; color:#3e4855; }
+    .outcome strong { color:#263343; }
+    .row { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:12px 14px; background:#fff; border:1px solid #dbe0e5; border-radius:6px; font-size:12px; margin-bottom:7px; }
+    .status { font-size:10px; font-weight:800; padding:3px 8px; border-radius:50px; white-space:nowrap; }
+    .status.ok { background:var(--green); color:#176446; }
+    .status.fail { background:#ffe6e5; color:#a83339; }
+    .status.skip { background:#e5e9ef; color:#586270; }
+    .monitor { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
+    .monitor div { background:#fff; border:1px solid #dbe0e5; border-radius:7px; padding:13px; }
+    .monitor b { display:block; font-size:12px; margin-bottom:3px; }
+    .monitor span { color:#68717c; font-size:11px; }
+    .monitor .warn { border-color:#efbdc3; background:#fff6f6; }
+    .monitor .warn span { color:#b1303d; }
+    .note { font-size:12px; color:#78818c; margin:14px 0 0; }
+    .method { background:#e9edf0; }
+    .method-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:13px; }
+    .method-card { background:#fff; border:1px solid #d8dde2; padding:23px; border-radius:9px; }
+    .method-card .n { color:var(--accent-dark); font-weight:900; font-size:12px; }
+    .method-card h3 { font-size:17px; margin:16px 0 8px; letter-spacing:-.04em; }
+    .method-card p { font-size:12px; color:var(--muted); margin:0; }
+    .more { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .more article { background:#fff; border:1px solid var(--line); border-radius:9px; padding:28px; }
+    .more h3 { font-size:20px; letter-spacing:-.04em; margin:0 0 11px; }
+    .more p { font-size:13px; color:var(--muted); margin:0; }
+    .contact { background:var(--ink); color:#fff; padding:66px 0; }
+    .contact .wrap { display:flex; align-items:end; justify-content:space-between; gap:25px; }
+    .contact h2 { font-size:clamp(28px,4vw,42px); letter-spacing:-.05em; line-height:1.3; margin-bottom:11px; }
+    .contact p { color:#bcc3cd; font-size:14px; max-width:650px; margin:0; }
+    footer { background:#11151d; color:#a9b0bb; padding:20px 0; font-size:11px; }
+    footer .wrap { display:flex; justify-content:space-between; gap:20px; }
+    @media (max-width:850px) {
+      .hero .wrap { grid-template-columns:1fr; padding:70px 0; }
+      .hero-card { transform:none; box-shadow:none; max-width:550px; }
+      .case { grid-template-columns:1fr; gap:25px; }
+      .method-grid { grid-template-columns:repeat(2,1fr); }
+      .section-head { display:block; }
+      .section-head > p { margin-top:16px; }
+    }
+    @media (max-width:600px) {
+      .wrap { width:calc(100% - 32px); }
+      .site-header .wrap { align-items:flex-start; flex-direction:column; justify-content:center; padding:16px 0; gap:12px; }
+      nav { gap:16px; }
+      .hero .wrap { padding:55px 0 65px; gap:28px; }
+      h1 { font-size:37px; }
+      .hero .lead { font-size:15px; }
+      .hero-card { padding:23px; }
+      .stats .wrap { grid-template-columns:1fr; }
+      .stat { padding:18px 0; border-right:0; border-bottom:1px solid var(--line); }
+      .stat:last-child { border:0; }
+      .section { padding:64px 0; }
+      .case { padding:23px; }
+      .case h3 { font-size:22px; }
+      .diagram { padding:17px; min-height:0; }
+      .flow { display:block; }
+      .flow .arrow { display:block; text-align:center; padding:4px; transform:rotate(90deg); }
+      .method-grid,.more { grid-template-columns:1fr; }
+      .contact .wrap { display:block; }
+      .contact .button { margin-top:24px; }
+      footer .wrap { display:block; }
+      footer span { display:block; margin:3px 0; }
+    }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .button { transition:none; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">본문으로 건너뛰기</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="#top">KIM SEOYUN <span>·</span> AD PLATFORM PM</a>
+      <nav aria-label="주요 메뉴">
+        <a href="#work">프로젝트</a>
+        <a href="#approach">업무 방식</a>
+        <a href="#experience">관련 경험</a>
+        <a href="#contact">연락</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="wrap">
+        <div>
+          <p class="eyebrow">Advertising Platform · Product Manager</p>
+          <h1 id="hero-title">광고 운영의<br>복잡한 조건을<br>실행 가능한 제품으로.</h1>
+          <p class="lead">안녕하세요, 김서윤입니다. 5년 이상 광고 플랫폼을 기획하며 매체 API, 광고 성과 조건, 운영 현장의 요구를 제품 정책과 화면으로 연결했습니다. 자동입찰부터 대량 작업과 통합 모니터링까지, 출시와 운영에 필요한 기준을 설계했습니다.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#work">프로젝트 보기 ↗</a>
+            <a class="button ghost" href="#contact">연락하기</a>
+          </div>
+        </div>
+        <aside class="hero-card" aria-label="기획 과정 요약">
+          <div class="kicker">PRODUCT WORKFLOW</div>
+          <h2>요구사항에서<br>운영 가능한 기능까지</h2>
+          <ol>
+            <li><strong>01</strong> 광고 운영 문제와 매체 제약 확인</li>
+            <li><strong>02</strong> 실행 조건·상태·예외 정책 정의</li>
+            <li><strong>03</strong> PRD·화면·프로토타입으로 협업</li>
+            <li><strong>04</strong> QA·출시 후 이용 현황 검토</li>
+          </ol>
+          <p class="small">아래 사례는 공개 가능한 범위에서 구조를 재구성했습니다.</p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="stats" aria-label="경력 요약">
+      <div class="wrap">
+        <div class="stat"><b>5년+</b><span>광고 플랫폼 기획</span></div>
+        <div class="stat"><b>5개</b><span>광고 매체 Open API 분석·연동 경험</span></div>
+        <div class="stat"><b>기획 → 출시</b><span>PRD·정책·화면·QA·운영 검토</span></div>
+      </div>
+    </div>
+
+    <section class="section" id="work" aria-labelledby="work-title">
+      <div class="wrap">
+        <div class="section-head">
+          <div><p class="eyebrow">Selected Work</p><h2 id="work-title">광고 효율과 운영 경험을<br>함께 설계한 프로젝트</h2></div>
+          <p>셀러와 광고 대행사가 여러 매체의 광고를 운영하는 DIAD에서 담당한 사례입니다. 결과에는 확인 가능한 출시·검증 사실만 기재했습니다.</p>
+        </div>
+
+        <article class="case" aria-labelledby="case-one">
+          <div>
+            <span class="case-num">01 / PERFORMANCE AUTOMATION</span>
+            <h3 id="case-one">목표 ROAS 조건을<br>자동입찰 정책으로</h3>
+            <p class="summary">G마켓 광고센터 개편에 맞춰 광고 계층을 연동하고, 사용자가 정한 성과 조건과 입찰가 한도 안에서 입찰을 실행하도록 설계했습니다.</p>
+            <div class="tags"><span class="tag">상품형 광고</span><span class="tag">ROAS</span><span class="tag">매체 API</span><span class="tag">출시 완료</span></div>
+            <dl class="facts">
+              <div><dt>문제</dt><dd>캠페인·광고그룹·상품·키워드 구조 변경에 맞춰 조회와 입찰 기능을 다시 연결해야 했습니다.</dd></div>
+              <div><dt>결정</dt><dd>ROAS 구간, 광고비·클릭수 조건, 최저·최대 입찰가와 실행 일정을 정책으로 정의했습니다.</dd></div>
+              <div><dt>기여</dt><dd>API 분석, PRD, 설정 화면과 프로토타입, 실행·조건미달 상태, QA 기준을 담당했습니다.</dd></div>
+              <div><dt>결과</dt><dd>광고 운영 모드와 자동입찰 모드를 출시했습니다.</dd></div>
+            </dl>
+          </div>
+          <div class="diagram" role="img" aria-label="ROAS 조건, 운영 한도, 입찰 실행 결과로 이어지는 정책 흐름">
+            <p class="caption">설계한 판단 흐름 · 설명용 재구성</p>
+            <div class="flow">
+              <div class="step"><b>성과 조건</b>ROAS 구간<br>광고비 · 클릭수</div><span class="arrow">→</span>
+              <div class="step"><b>운영 한도</b>최저 · 최대 입찰가<br>실행 일정</div><span class="arrow">→</span>
+              <div class="step"><b>처리 결과</b>상향 · 하향<br>유지 · 조건미달</div>
+            </div>
+            <div class="outcome"><strong>정책 원칙</strong> · 설정 범위 밖은 유지하고, 실행 오류와 조건 미충족을 구분</div>
+          </div>
+        </article>
+
+        <article class="case" aria-labelledby="case-two">
+          <div>
+            <span class="case-num">02 / OPERATIONS AT SCALE</span>
+            <h3 id="case-two">반복 광고 작업을<br>안전한 일괄 처리로</h3>
+            <p class="summary">네이버 광고센터에서 반복하던 조회·등록·수정·삭제를 통합 조회와 엑셀 일괄 작업 흐름으로 전환했습니다.</p>
+            <div class="tags"><span class="tag">운영 자동화</span><span class="tag">예외 처리</span><span class="tag">재처리</span><span class="tag">2026.07 출시</span></div>
+            <dl class="facts">
+              <div><dt>문제</dt><dd>광고 대상별 API와 입력 항목이 달라 일괄 작업 중 일부 행만 실패할 수 있었습니다.</dd></div>
+              <div><dt>결정</dt><dd>실행 전 입력값을 검증하고, 성공한 행은 보존하며 실패한 행만 수정·재처리하도록 했습니다.</dd></div>
+              <div><dt>기여</dt><dd>작업 정책, 행별 상태, 선행 작업 실패 시 건너뜀 처리, 사용자·관리자 화면과 QA를 담당했습니다.</dd></div>
+              <div><dt>결과</dt><dd>광고 대상별 통합 조회와 일괄 작업 기능을 출시했습니다.</dd></div>
+            </dl>
+          </div>
+          <div class="diagram" role="img" aria-label="일괄 작업의 성공, 실패, 건너뜀 상태와 각 후속 조치">
+            <p class="caption">행별 결과와 후속 조치 · 설명용 재구성</p>
+            <div class="row"><span>캠페인 수정 · 001</span><span class="status ok">성공 · 보존</span></div>
+            <div class="row"><span>키워드 등록 · 002</span><span class="status fail">실패 · 수정 후 재처리</span></div>
+            <div class="row"><span>소재 등록 · 003</span><span class="status skip">건너뜀 · 선행 작업 확인</span></div>
+            <div class="outcome"><strong>정책 원칙</strong> · 이미 성공한 작업을 다시 실행해 중복 처리하지 않음</div>
+          </div>
+        </article>
+
+        <article class="case" aria-labelledby="case-three">
+          <div>
+            <span class="case-num">03 / OPERATIONAL VISIBILITY</span>
+            <h3 id="case-three">매체별 광고비와 잔액을<br>한 화면에서 확인하도록</h3>
+            <p class="summary">네이버·11번가·G마켓·옥션의 광고비, 충전 잔액, 예산 변동을 광고주 단위로 모아 조치가 필요한 상태를 식별하도록 했습니다.</p>
+            <div class="tags"><span class="tag">광고 데이터</span><span class="tag">운영 정책</span><span class="tag">관리자 화면</span><span class="tag">2026.07 출시</span></div>
+            <dl class="facts">
+              <div><dt>문제</dt><dd>매체마다 광고센터와 표시 기준이 달라 잔액 소진과 광고비 변동을 한 번에 확인하기 어려웠습니다.</dd></div>
+              <div><dt>결정</dt><dd>실제 0원과 수집 실패를 구분하고, 부분 실패·비교 불가·마지막 수집 시각을 함께 표시했습니다.</dd></div>
+              <div><dt>기여</dt><dd>상태 코드와 알림 기준, 관리자 화면, HTML/Vue 프로토타입과 QA를 담당했습니다.</dd></div>
+              <div><dt>결과</dt><dd>4개 매체의 광고비·잔액·예산 변동을 확인하는 내부 화면을 출시했습니다.</dd></div>
+            </dl>
+          </div>
+          <div class="diagram" role="img" aria-label="네 매체의 수집 상태를 정상, 조치 필요, 미확인으로 구분한 모니터링 개념도">
+            <p class="caption">모니터링 상태 · 설명용 재구성</p>
+            <div class="monitor">
+              <div><b>네이버</b><span>정상 수집 · 기준 시각 표시</span></div>
+              <div class="warn"><b>11번가</b><span>잔액 임계치 · 조치 필요</span></div>
+              <div><b>G마켓</b><span>정상 수집 · 변동 확인</span></div>
+              <div><b>옥션</b><span>수집 실패 · 미확인 표시</span></div>
+            </div>
+            <div class="outcome"><strong>정책 원칙</strong> · 확인되지 않은 값을 0원으로 표시하지 않음</div>
+          </div>
+        </article>
+        <p class="note">화면의 수치와 상태 예시는 정책 설명을 위한 재구성이며 실제 운영 데이터가 아닙니다.</p>
+      </div>
+    </section>
+
+    <section class="section method" id="approach" aria-labelledby="approach-title">
+      <div class="wrap">
+        <div class="section-head"><div><p class="eyebrow">How I Work</p><h2 id="approach-title">정책이 출시 후에도<br>작동하도록</h2></div><p>광고 운영 부서의 요구와 실제 매체 제약을 함께 확인하고, 정상 흐름과 실패 상황을 같은 수준으로 설계합니다.</p></div>
+        <div class="method-grid">
+          <article class="method-card"><span class="n">01 · DISCOVER</span><h3>문제 확인</h3><p>광고 운영 절차, 이용 현황, 매체 정책과 API 제약을 확인합니다.</p></article>
+          <article class="method-card"><span class="n">02 · DEFINE</span><h3>기준 정의</h3><p>실행 조건과 상태, 예외, 재처리 방법을 PRD와 기능명세로 정리합니다.</p></article>
+          <article class="method-card"><span class="n">03 · BUILD</span><h3>구현 협업</h3><p>사용자·관리자 화면과 프로토타입을 만들고 개발·디자인과 조율합니다.</p></article>
+          <article class="method-card"><span class="n">04 · LEARN</span><h3>검증과 운영</h3><p>QA에서 기준대로 동작하는지 확인하고 출시 후 이용 현황을 검토합니다.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="experience" aria-labelledby="experience-title">
+      <div class="wrap">
+        <div class="section-head"><div><p class="eyebrow">Related Experience</p><h2 id="experience-title">광고 밖의 경험도<br>제품 판단에 연결합니다</h2></div></div>
+        <div class="more">
+          <article><p class="eyebrow">COMMERCE · MARKEA</p><h3>신규 커머스 기획부터 출시까지</h3><p>회원가입, 상품, 주문, 결제, 리워드 정책과 사용자·관리자 화면을 설계했습니다. 외주 개발사와 구매 흐름별 QA를 진행하며 신규 서비스를 출시했습니다.</p></article>
+          <article><p class="eyebrow">DATA · GOOGLE SHOPPING ADS</p><h3>출시 후 실제 이용 흐름을 확인</h3><p>상품 피드부터 판매자센터와 Google Ads까지 연동 서비스를 출시했습니다. 이후 캠페인 생성이 발생하지 않은 것을 확인해 연결 과정의 재검토를 제안했고, 운영 종료 결정에 따른 후속 기준을 정리했습니다.</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <section class="contact" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <div><p class="eyebrow">Contact</p><h2 id="contact-title">광고 운영의 문제를<br>제품의 기준으로 연결하겠습니다.</h2><p>김서윤 · 광고 플랫폼 Product Manager<br>지그재그 광고플랫폼 PO 지원용 웹 포트폴리오</p></div>
+      <a class="button primary" href="mailto:seoyun.kim91@gmail.com">이메일 보내기 ↗</a>
+    </div>
+  </section>
+  <footer><div class="wrap"><span>© 2026 Kim Seoyun. Portfolio for recruitment.</span><span>공개 가능한 범위에서 작성했으며 도식은 설명용 재구성입니다.</span></div></footer>
+</body>
+</html>
